@@ -377,30 +377,8 @@
     z-index: 1;
   }
 
-  /* oyoqlar ochilish (loader tugashi) arafasida kattalashadi */
+  /* oyoqlar ochilish arafasida uzayadi (SMIL animatsiya, svg ichida) */
   .spider-bg { overflow: visible; }
-
-  .spider-bg .legs {
-    transform-box: view-box;
-    transform-origin: 50% 48.75%;      /* tananing markazi */
-    animation: legGrow 1.9s cubic-bezier(0.55, 0.05, 0.9, 0.45) 1.6s both;
-  }
-
-  .spider-bg .legs path {
-    vector-effect: non-scaling-stroke; /* kattalashganda ham haddan tashqari yo'g'onlashmaydi */
-    stroke-width: 6px;
-    animation: legThick 1.9s cubic-bezier(0.55, 0.05, 0.9, 0.45) 1.6s both;
-  }
-
-  @keyframes legGrow {
-    from { transform: scale(1); }
-    to   { transform: scale(4.5); }
-  }
-
-  @keyframes legThick {
-    from { stroke-width: 6px; }
-    to   { stroke-width: 14px; }
-  }
 
   @keyframes spiderFloat {
     0%, 100% { transform: translate(-50%, -50%) scale(1); }
@@ -506,16 +484,30 @@
     </defs>
     <ellipse cx="200" cy="195" rx="20" ry="28" fill="url(#legGrad)" opacity="0.9"/>
     <circle cx="200" cy="155" r="15" fill="url(#legGrad)" opacity="0.9"/>
-    <g class="legs">
-    <path d="M185 175 C150 150 100 120 60 60" stroke="url(#legGrad)" stroke-width="5" fill="none" stroke-linecap="round"/>
-    <path d="M180 190 C140 175 90 165 40 150" stroke="url(#legGrad)" stroke-width="5" fill="none" stroke-linecap="round"/>
-    <path d="M180 210 C140 220 90 235 45 260" stroke="url(#legGrad)" stroke-width="5" fill="none" stroke-linecap="round"/>
-    <path d="M185 225 C150 250 110 290 70 340" stroke="url(#legGrad)" stroke-width="5" fill="none" stroke-linecap="round"/>
-    <path d="M215 175 C250 150 300 120 340 60" stroke="url(#legGrad)" stroke-width="5" fill="none" stroke-linecap="round"/>
-    <path d="M220 190 C260 175 310 165 360 150" stroke="url(#legGrad)" stroke-width="5" fill="none" stroke-linecap="round"/>
-    <path d="M220 210 C260 220 310 235 355 260" stroke="url(#legGrad)" stroke-width="5" fill="none" stroke-linecap="round"/>
-    <path d="M215 225 C250 250 290 290 330 340" stroke="url(#legGrad)" stroke-width="5" fill="none" stroke-linecap="round"/>
-    </g>
+    <path class="leg" d="M185 175 C150 150 100 120 60 60" stroke="url(#legGrad)" stroke-width="5" fill="none" stroke-linecap="round">
+      <animate attributeName="d" dur="1.8s" begin="1.60s" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines="0.55 0.05 0.9 0.45" values="M185 175 C150 150 100 120 60 60;M185 175 C125 132 -43 28 -240 -216"/>
+    </path>
+    <path class="leg" d="M180 190 C140 175 90 165 40 150" stroke="url(#legGrad)" stroke-width="5" fill="none" stroke-linecap="round">
+      <animate attributeName="d" dur="1.8s" begin="1.66s" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines="0.55 0.05 0.9 0.45" values="M180 190 C140 175 90 165 40 150;M180 190 C111 164 -61 123 -296 54"/>
+    </path>
+    <path class="leg" d="M180 210 C140 220 90 235 45 260" stroke="url(#legGrad)" stroke-width="5" fill="none" stroke-linecap="round">
+      <animate attributeName="d" dur="1.8s" begin="1.72s" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines="0.55 0.05 0.9 0.45" values="M180 210 C140 220 90 235 45 260;M180 210 C111 227 -61 277 -279 380"/>
+    </path>
+    <path class="leg" d="M185 225 C150 250 110 290 70 340" stroke="url(#legGrad)" stroke-width="5" fill="none" stroke-linecap="round">
+      <animate attributeName="d" dur="1.8s" begin="1.78s" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines="0.55 0.05 0.9 0.45" values="M185 225 C150 250 110 290 70 340;M185 225 C125 268 -16 399 -206 616"/>
+    </path>
+    <path class="leg" d="M215 175 C250 150 300 120 340 60" stroke="url(#legGrad)" stroke-width="5" fill="none" stroke-linecap="round">
+      <animate attributeName="d" dur="1.8s" begin="1.84s" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines="0.55 0.05 0.9 0.45" values="M215 175 C250 150 300 120 340 60;M215 175 C275 132 443 28 640 -216"/>
+    </path>
+    <path class="leg" d="M220 190 C260 175 310 165 360 150" stroke="url(#legGrad)" stroke-width="5" fill="none" stroke-linecap="round">
+      <animate attributeName="d" dur="1.8s" begin="1.90s" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines="0.55 0.05 0.9 0.45" values="M220 190 C260 175 310 165 360 150;M220 190 C289 164 461 123 696 54"/>
+    </path>
+    <path class="leg" d="M220 210 C260 220 310 235 355 260" stroke="url(#legGrad)" stroke-width="5" fill="none" stroke-linecap="round">
+      <animate attributeName="d" dur="1.8s" begin="1.96s" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines="0.55 0.05 0.9 0.45" values="M220 210 C260 220 310 235 355 260;M220 210 C289 227 461 277 679 380"/>
+    </path>
+    <path class="leg" d="M215 225 C250 250 290 290 330 340" stroke="url(#legGrad)" stroke-width="5" fill="none" stroke-linecap="round">
+      <animate attributeName="d" dur="1.8s" begin="2.02s" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines="0.55 0.05 0.9 0.45" values="M215 225 C250 250 290 290 330 340;M215 225 C275 268 416 399 606 616"/>
+    </path>
   </svg>
 
   <div class="nametag" id="nametag">
