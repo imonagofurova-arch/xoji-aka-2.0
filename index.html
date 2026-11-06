@@ -3,6 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <title>casflux</title>
+<meta name="description" content="casflux — xoji aka. Telegram, Instagram va CAS SHOP.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="casflux">
+<meta property="og:title" content="casflux">
+<meta property="og:description" content="xoji aka. Telegram, Instagram va CAS SHOP.">
+<meta property="og:url" content="https://casflux.com/">
+<meta property="og:image" content="https://casflux.com/preview.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="casflux">
+<meta name="twitter:description" content="xoji aka. Telegram, Instagram va CAS SHOP.">
+<meta name="twitter:image" content="https://casflux.com/preview.png">
 <style>
   html, body {
     margin: 0;
@@ -134,6 +147,9 @@
   }
 
   .tagline {
+    --mx: 0px; --my: 0px;
+    transform: translate(var(--mx), var(--my));
+    transition: transform 0.2s ease-out;
     margin-top: 18px;
     font-size: 16px;
     color: #8a7fa8;
@@ -176,7 +192,44 @@
   .socials a:hover {
     background: rgba(180,150,255,0.25);
     box-shadow: 0 0 18px rgba(180,150,255,0.6);
-    transform: translateY(-3px);
+    transform: translate(var(--mx), calc(var(--my) - 3px));
+  }
+
+  /* uzunroq tugma: socials qatori ostida */
+  .daily {
+    pointer-events: auto;
+    box-sizing: border-box;
+    width: 100%;
+    margin-top: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 14px 20px;
+    border-radius: 8px;
+    background: rgba(180,150,255,0.08);
+    border: 1px solid rgba(180,150,255,0.35);
+    color: #d8caff;
+    text-decoration: none;
+    font-size: 14px;
+    letter-spacing: 2px;
+    opacity: 0;
+    animation: fadeIn 1s ease forwards;
+    animation-delay: 3.1s;
+    transition: background 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+  }
+
+  .daily:hover {
+    background: rgba(180,150,255,0.25);
+    box-shadow: 0 0 18px rgba(180,150,255,0.6);
+    transform: translate(var(--mx), calc(var(--my) - 3px));
+  }
+
+  .daily svg {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+    flex-shrink: 0;
   }
 
   .socials svg {
@@ -214,6 +267,75 @@
     height: 22px;
     fill: currentColor;
   }
+
+  /* ===== Tugma animatsiyalari: magnit, kursor ketidan nur, bosganda to'lqin, glitch ===== */
+  .socials a, .daily, #music-toggle {
+    --mx: 0px; --my: 0px; --gx: 50%; --gy: 50%;
+    overflow: hidden;
+    isolation: isolate;
+    transform: translate(var(--mx), var(--my));
+  }
+  .socials a, .daily { position: relative; }
+  .socials a, .daily { transition: transform 0.2s ease-out, background 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease; }
+
+  .socials a::before, .daily::before, #music-toggle::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0;
+    background: radial-gradient(110px circle at var(--gx) var(--gy), rgba(216,202,255,0.38), transparent 70%);
+    transition: opacity 0.25s ease;
+  }
+  .socials a:hover::before, .daily:hover::before, #music-toggle:hover::before { opacity: 1; }
+
+  .fx-ripple {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    background: radial-gradient(circle, rgba(236,226,255,0.6) 0%, rgba(180,150,255,0.3) 45%, rgba(180,150,255,0) 70%);
+    transform: translate(-50%, -50%) scale(0);
+    animation: fxRipple 0.65s ease-out forwards;
+  }
+  @keyframes fxRipple {
+    to { transform: translate(-50%, -50%) scale(1); opacity: 0; }
+  }
+
+  /* glitch: faqat "daily photos by me" tugmasi */
+  .daily span { position: relative; display: inline-block; }
+  .daily span::before, .daily span::after {
+    content: attr(data-text);
+    position: absolute;
+    left: 0; top: 0; width: 100%;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    mix-blend-mode: screen;
+  }
+  .daily span::before { color: #00e5ff; }
+  .daily span::after  { color: #ff2d78; }
+  .daily:hover span { animation: glitchShake 0.35s linear; }
+  .daily:hover span::before { animation: ghostA 0.35s linear; }
+  .daily:hover span::after  { animation: ghostB 0.35s linear; }
+  @keyframes ghostA {
+    0%, 100% { opacity: 0; transform: translate(0, 0); }
+    20% { opacity: 1; transform: translate(-3px, -1px); }
+    50% { opacity: 1; transform: translate(-2px, 1px); }
+    80% { opacity: 1; transform: translate(-3px, 0); }
+  }
+  @keyframes ghostB {
+    0%, 100% { opacity: 0; transform: translate(0, 0); }
+    20% { opacity: 1; transform: translate(3px, 1px); }
+    50% { opacity: 1; transform: translate(2px, -1px); }
+    80% { opacity: 1; transform: translate(3px, 0); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .daily:hover span, .daily:hover span::before, .daily:hover span::after { animation: none; }
+    .fx-ripple { display: none; }
+  }
+  /* ===== /Tugma animatsiyalari ===== */
 
   #yt-player-container {
     position: fixed;
@@ -253,6 +375,31 @@
     filter: drop-shadow(0 0 12px rgba(255,80,200,0.4));
     animation: spiderFloat 4s ease-in-out infinite;
     z-index: 1;
+  }
+
+  /* oyoqlar ochilish (loader tugashi) arafasida kattalashadi */
+  .spider-bg { overflow: visible; }
+
+  .spider-bg .legs {
+    transform-box: view-box;
+    transform-origin: 50% 48.75%;      /* tananing markazi */
+    animation: legGrow 1.9s cubic-bezier(0.55, 0.05, 0.9, 0.45) 1.6s both;
+  }
+
+  .spider-bg .legs path {
+    vector-effect: non-scaling-stroke; /* kattalashganda ham haddan tashqari yo'g'onlashmaydi */
+    stroke-width: 6px;
+    animation: legThick 1.9s cubic-bezier(0.55, 0.05, 0.9, 0.45) 1.6s both;
+  }
+
+  @keyframes legGrow {
+    from { transform: scale(1); }
+    to   { transform: scale(4.5); }
+  }
+
+  @keyframes legThick {
+    from { stroke-width: 6px; }
+    to   { stroke-width: 14px; }
   }
 
   @keyframes spiderFloat {
@@ -359,6 +506,7 @@
     </defs>
     <ellipse cx="200" cy="195" rx="20" ry="28" fill="url(#legGrad)" opacity="0.9"/>
     <circle cx="200" cy="155" r="15" fill="url(#legGrad)" opacity="0.9"/>
+    <g class="legs">
     <path d="M185 175 C150 150 100 120 60 60" stroke="url(#legGrad)" stroke-width="5" fill="none" stroke-linecap="round"/>
     <path d="M180 190 C140 175 90 165 40 150" stroke="url(#legGrad)" stroke-width="5" fill="none" stroke-linecap="round"/>
     <path d="M180 210 C140 220 90 235 45 260" stroke="url(#legGrad)" stroke-width="5" fill="none" stroke-linecap="round"/>
@@ -367,6 +515,7 @@
     <path d="M220 190 C260 175 310 165 360 150" stroke="url(#legGrad)" stroke-width="5" fill="none" stroke-linecap="round"/>
     <path d="M220 210 C260 220 310 235 355 260" stroke="url(#legGrad)" stroke-width="5" fill="none" stroke-linecap="round"/>
     <path d="M215 225 C250 250 290 290 330 340" stroke="url(#legGrad)" stroke-width="5" fill="none" stroke-linecap="round"/>
+    </g>
   </svg>
 
   <div class="nametag" id="nametag">
@@ -400,6 +549,11 @@
       <span>Qo'ng'iroq</span>
     </a>
   </div>
+
+  <a class="daily" href="https://t.me/flux_heree" target="_blank" rel="noopener" title="daily photos by me">
+    <svg viewBox="0 0 24 24"><path d="M9 3 7.17 5H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-3.17L15 3H9zm3 15a5 5 0 1 1 0-10 5 5 0 0 1 0 10zm0-1.8a3.2 3.2 0 1 0 0-6.4 3.2 3.2 0 0 0 0 6.4z"/></svg>
+    <span data-text="daily photos by me">daily photos by me</span>
+  </a>
 </div>
 
 <div id="yt-player-container">
@@ -479,7 +633,7 @@ type();
   // Ushlangan rasm turi -> unga yaqinlashadigan rasm turlari (0 = 1-rasm, 1 = 2-rasm).
   // 1-rasm ushlansa, ekrandagi hamma 2-rasm unga yaqinlashadi.
   // Teskarisi ham bo'lsin desangiz: { 0: [1], 1: [0] }
-  const ATTRACT = { 0: [1] };
+  const ATTRACT = { 0: [1], 1: [0] };
 
   (function () {
     const gallery = document.getElementById('gallery');
@@ -843,6 +997,69 @@ type();
   }
   document.addEventListener('click', startOnFirstInteraction, { once: true });
   document.addEventListener('touchstart', startOnFirstInteraction, { once: true });
+</script>
+
+<script>
+  // ===== Tugma animatsiyalari: magnit, kursor ketidan nur, bosganda to'lqin =====
+  (function () {
+    const btns = Array.prototype.slice.call(document.querySelectorAll('.socials a, .daily, #music-toggle'));
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const RANGE = 70;   // tugmaga shu masofada yaqinlashganda tortila boshlaydi (px)
+    const PULL = 0.22;  // tortilish kuchi
+    const MAXP = 10;    // eng ko'p siljish (px)
+    const clamp = function (v, m) { return Math.max(-m, Math.min(m, v)); };
+
+    const tagline = document.querySelector('.tagline');
+    const mags = tagline ? btns.concat(tagline) : btns;   // magnit: tugmalar + "xoji aka"
+    mags.forEach(function (b) { b._mx = 0; b._my = 0; });
+
+    function setPull(b, x, y) {
+      b._mx = x; b._my = y;
+      b.style.setProperty('--mx', x.toFixed(1) + 'px');
+      b.style.setProperty('--my', y.toFixed(1) + 'px');
+    }
+
+    window.addEventListener('pointermove', function (e) {
+      if (e.pointerType === 'touch') return;
+      mags.forEach(function (b) {
+        const r = b.getBoundingClientRect();
+        // siljish ta'sirini hisobdan chiqaramiz, aks holda titrab qoladi
+        const cx = r.left + r.width / 2 - b._mx, cy = r.top + r.height / 2 - b._my;
+        const hw = r.width / 2, hh = r.height / 2;
+        const dx = e.clientX - cx, dy = e.clientY - cy;
+        const near = Math.abs(dx) < hw + RANGE && Math.abs(dy) < hh + RANGE;
+        if (!reduce) {
+          if (near) setPull(b, clamp(dx * PULL, MAXP), clamp(dy * PULL, MAXP * 0.8));
+          else if (b._mx || b._my) setPull(b, 0, 0);
+        }
+        if (Math.abs(dx) <= hw && Math.abs(dy) <= hh) {
+          b.style.setProperty('--gx', (dx + hw).toFixed(0) + 'px');
+          b.style.setProperty('--gy', (dy + hh).toFixed(0) + 'px');
+        }
+      });
+    });
+
+    function reset() { mags.forEach(function (b) { if (b._mx || b._my) setPull(b, 0, 0); }); }
+    document.documentElement.addEventListener('mouseleave', reset);
+    window.addEventListener('blur', reset);
+
+    // bosganda to'lqin
+    btns.forEach(function (b) {
+      b.addEventListener('pointerdown', function (e) {
+        if (reduce) return;
+        const r = b.getBoundingClientRect();
+        const x = e.clientX - r.left, y = e.clientY - r.top;
+        const d = 2 * Math.hypot(Math.max(x, r.width - x), Math.max(y, r.height - y));
+        const rp = document.createElement('i');
+        rp.className = 'fx-ripple';
+        rp.style.width = rp.style.height = d + 'px';
+        rp.style.left = x + 'px';
+        rp.style.top = y + 'px';
+        b.appendChild(rp);
+        rp.addEventListener('animationend', function () { rp.remove(); });
+      });
+    });
+  })();
 </script>
 
 </body>
