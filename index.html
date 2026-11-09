@@ -996,7 +996,20 @@ type();
 
 <script>
 
-  const VIDEO_ID = "hXCIH5VTWyg";
+  // ====== QO'SHIQNI SHU YERDA ALMASHTIRING ======
+  // YouTube'dan istalgan linkni (watch, youtu.be, shorts, music.youtube.com) yoki faqat video ID ni qo'ying
+  const MUSIC = "https://www.youtube.com/watch?v=pZ31pyTZdh0";
+  // ==============================================
+  // Qo'shiq nechanchi sekunddan boshlansin: soniya (60) yoki "1:00" ko'rinishida. 0 = boshidan
+  const START = "0:40";
+  const START_SEC = (function (t) {
+    const p = String(t).split(':').map(Number);
+    return p.reduce(function (a, x) { return a * 60 + (x || 0); }, 0);
+  })(START);
+  const VIDEO_ID = (function (s) {
+    const m = String(s).match(/(?:v=|youtu\.be\/|shorts\/|embed\/)([\w-]{11})/);
+    return m ? m[1] : String(s).trim();
+  })(MUSIC);
   let ytPlayer;
   let isPlaying = false;
   let playerReady = false;
@@ -1014,11 +1027,14 @@ type();
       videoId: VIDEO_ID,
       playerVars: {
         autoplay: 0,
-        loop: 1,
-        playlist: VIDEO_ID,
+        start: START_SEC,
         controls: 0
       },
       events: {
+        onStateChange: (e) => {
+          // qo'shiq tugasa, yana START dan boshlab qayta chalinadi
+          if (e.data === 0) { ytPlayer.seekTo(START_SEC, true); ytPlayer.playVideo(); }
+        },
         onReady: (e) => {
           playerReady = true;
           if (pendingToggle) {
